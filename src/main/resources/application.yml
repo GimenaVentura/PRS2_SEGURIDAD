@@ -1,17 +1,18 @@
 server:
-  port: 9000
+  port: ${PORT:9000}
+
 spring:
   application:
-    name: TypeKardex
+    name: ${SPRING_APP_NAME:TypeKardex}
 
   r2dbc:
-    url: r2dbc:postgresql://aws-0-us-west-1.pooler.supabase.com:5432/postgres
-    username: postgres.syyjmpdsuuorxysggtsn
-    password: cristhopersocalay2025
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://securetoken.google.com/prs2-83d22
-          jwk-set-uri: https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com
+          issuer-uri: ${JWT_ISSUER_URI}
+          jwk-set-uri: ${JWT_JWK_SET_URI}
