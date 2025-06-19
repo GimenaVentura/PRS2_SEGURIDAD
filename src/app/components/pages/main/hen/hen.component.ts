@@ -10,6 +10,7 @@ import { Hen } from '../../../../interfaces/Hen';
 import { Shed } from '../../../../interfaces/Shed';
 import { HenService } from '../../../../services/hen.service';
 import { ShedService } from '../../../../services/shed.service';
+import { AuthService } from '../../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-hen',
@@ -36,14 +37,34 @@ export class HenComponent implements OnInit {
   sheds: Shed[] = [];
   shedNames: Map<number, string> = new Map();
 
+  // Variables para el control de permisos
+  userRole: string | null = null
+  isAdmin = false
+  isUser = false
+
   constructor(
     private henService: HenService,
-    private shedService: ShedService // Add ShedService
+    private shedService: ShedService,
+    private authService: AuthService, // Add ShedService
   ) { }
 
   ngOnInit(): void {
     this.loadSheds();
     this.listarGallinas();
+    this.checkUserPermissions()
+  }
+
+  /**
+   * 🔒 Verificar permisos del usuario
+   */
+  private checkUserPermissions(): void {
+    this.userRole = this.authService.getRole()
+    this.isAdmin = this.authService.isAdminSync()
+    this.isUser = this.authService.isUserSync()
+
+    console.log("Rol del usuario:", this.userRole)
+    console.log("Es admin:", this.isAdmin)
+    console.log("Es user:", this.isUser)
   }
 
   // Load all sheds

@@ -48,15 +48,16 @@ export class HomeService {
     );
   }
 
+  // CORREGIDO: deactivate usa /homes/{id}/deactivate y body vacío
   deactivateHome(id: number): Observable<void> {
-  return this.withAuthHeaders().pipe(
-    switchMap(headers => this.http.put<void>(`${this.homeUrl}/deactivate/${id}`, {}, { headers }))
-  );
-}
+    return this.withAuthHeaders().pipe(
+      switchMap(headers => this.http.put<void>(`${this.homeUrl}/${id}/deactivate`, {}, { headers }))
+    );
+  }
 
   reactivateHome(id: number): Observable<Home> {
   return this.withAuthHeaders().pipe(
-    switchMap(headers => this.http.put<Home>(`${this.homeUrl}/restore/${id}`, {}, { headers }))
+    switchMap(headers => this.http.put<Home>(`${this.homeUrl}/${id}/restore`, {}, { headers }))
   );
 }
 

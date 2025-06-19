@@ -5,6 +5,28 @@
         GALLINAS
       </span>
     </h1>
+    <div class="mt-2">
+        <span *ngIf="isAdmin"
+          class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Admin - Acceso completo
+        </span>
+        <span *ngIf="isUser"
+          class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+          Usuario - Solo lectura
+        </span>
+      </div>
   </div>
 </header>
 
@@ -13,7 +35,7 @@
     <h2 class="text-xl font-bold text-center md:text-left mb-2 md:mb-0">Lista de Gallinas</h2>
     <div class="flex flex-col md:flex-row gap-2">
       <button
-        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 px-4 rounded flex items-center text-base"
+        *ngIf="!isUser" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 px-4 rounded flex items-center text-base"
         (click)="abrirModalAgregar()">
         <i class="fas fa-plus mr-2"></i> Agregar Gallina
       </button>
@@ -239,16 +261,16 @@
           <td class="px-4 py-3">{{ getShedName(gallina.shedId) }}</td>
           <td class="px-4 py-3 flex justify-center space-x-3">
             <ng-container *ngIf="gallina.status === 'A'">
-              <button class="text-blue-500 hover:text-blue-700 text-lg" (click)="editarGallina(gallina)">
+              <button *ngIf="!isUser" class="text-blue-500 hover:text-blue-700 text-lg" (click)="editarGallina(gallina)">
                 <i class="fas fa-edit"></i>
               </button>
-              <button *ngIf="gallina.id !== undefined" class="text-red-500 hover:text-red-700 text-lg"
+              <button *ngIf="gallina.id !== undefined && !isUser" class="text-red-500 hover:text-red-700 text-lg"
                 (click)="eliminarGallina(gallina.id)">
                 <i class="fas fa-trash-alt"></i>
               </button>
             </ng-container>
             <ng-container *ngIf="gallina.status === 'I'">
-              <button *ngIf="gallina.id !== undefined" class="text-green-500 hover:text-green-700 text-lg"
+              <button *ngIf="gallina.id !== undefined && !isUser" class="text-green-500 hover:text-green-700 text-lg"
                 (click)="restaurarGallina(gallina.id)">
                 <i class="fas fa-undo"></i>
               </button>

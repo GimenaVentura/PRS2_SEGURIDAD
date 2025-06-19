@@ -14,6 +14,7 @@ import { CicloVidaService } from '../../../../services/lifecycle.service';
 import { HenService } from '../../../../services/hen.service';
 import { VaccineService } from '../../../../services/vaccine.service';
 import { FoodService } from '../../../../services/food.service';
+import { AuthService } from '../../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-lifecycle',
@@ -44,24 +45,47 @@ export class LifecycleComponent implements OnInit {
   validFields: { [key: string]: boolean } = {};
   showExportDropdown: boolean = false;
 
+  // Variables para el control de permisos
+  userRole: string | null = null
+  isAdmin = false
+  isUser = false
+
   private vaccineSub: Subscription | undefined;
   private foodSub: Subscription | undefined;
+
 
   constructor(
     private cicloVidaService: CicloVidaService,
     private henService: HenService,
     private vacunaService: VaccineService,
-    private foodService: FoodService
+    private foodService: FoodService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
     this.listarCiclos();
     this.getHens();
+    this.checkUserPermissions();
   }
+
+  /**
+   * 🔒 Verificar permisos del usuario
+   */
+  private checkUserPermissions(): void {
+    this.userRole = this.authService.getRole()
+    this.isAdmin = this.authService.isAdminSync()
+    this.isUser = this.authService.isUserSync()
+
+    console.log("Rol del usuario:", this.userRole)
+    console.log("Es admin:", this.isAdmin)
+    console.log("Es user:", this.isUser)
+  }
+
 
   ngOnDestroy(): void {
     this.vaccineSub?.unsubscribe();
     this.foodSub?.unsubscribe();
+
   }
 
   getHens() {
