@@ -1,0 +1,21 @@
+# application.yml
+server:
+  port: ${PORT:8086}
+
+spring:
+  application:
+    name: ${SPRING_APP_NAME:UtilyDiaria}
+
+  r2dbc:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${JWT_ISSUER_URI}
+          jwk-set-uri: ${JWT_JWK_SET_URI}
+
+
