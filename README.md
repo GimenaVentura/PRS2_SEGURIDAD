@@ -10,5 +10,5 @@ DB_USERNAME=postgres.syyjmpdsuuorxysggtsn
 DB_PASSWORD=cristhopersocalay2025
 
 # Seguridad OAuth2 - Firebase
-JWT_ISSUER_URI=https://securetoken.google.com/prs2-83d22
+JWT_ISSUER_URI=https://securetoken.google.com/security-prs2
 JWT_JWK_SET_URI=https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com
